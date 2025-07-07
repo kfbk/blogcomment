@@ -1,0 +1,170 @@
+Djangoで始めるブログ作成講座①：ブログを作ろう！
+https://freemas.stepupkaraoke.com/python/django/making-blog-1
+
+
+作業フォルダの作成と仮想環境の設定
+
+	mkdir blogcomment
+	cd blogcomment
+	python -m venv venv		仮想環境を作成
+	.\venv\Scripts\activate		venv環境が起動
+	pip list
+	pip install django-markdownx	Django,Markdown,django-markdownx,pillow がインストールされた
+
+プロジェクトを作成
+	python -m django startproject config .
+	python manage.py runserver
+
+アプリを作成する
+	python manage.py startapp app
+
+設定ファイルの編集
+
+	config\settings.py INSTALLED_APPS
+	config\urls.py
+
+以下、Model→View→Template→urls.pyの順で組み立て
+
+Django管理画面をセットアップする
+
+	admin.py 編集
+
+	ターミナルにてデータベースに反映させるためにマイグレーションを行い、スーパーユーザーを作成します。
+
+	# マイグレーションファイルの作成
+	$ python manage.py makemigrations
+
+	# データベースの移行
+	$ python manage.py migrate
+
+	# スーパーユーザーの登録
+	$ python manage.py createsuperuser
+		Username (leave blank to use 'user'): 	satou1497
+		Email address: 				satou1497@gmail.com
+		Password:				satousatou123
+
+記事間違い
+	post_list.html
+		    {% for post in posts %} --> {% for post in post_list %}
+
+
+Djangoで始めるブログ作成講座②：アイキャッチ画像を導入しよう！
+https://freemas.stepupkaraoke.com/python/django/making-blog-2
+
+	config\urls.py 編集
+	model.py 編集
+	$ python manage.py makemigrations
+	$ python manage.py migrate
+			マイグレーション
+	管理画面とブログ画面両方を少し修正
+
+Djangoで始めるブログ作成講座③：コメント投稿機能を導入しよう！
+https://freemas.stepupkaraoke.com/python/django/making-blog-3
+
+	model.py 編集
+
+	コメント表示
+		記事の間違いで、post_detail.html において
+			{% for comment in comments %}　→　{% for comment in app_comment %}
+		でOK。コメントを記入してPostしたら、
+		再び同じエラー、「no such table: app_comment」となった。現状解決策なし
+
+コメントの管理画面実装
+
+	同じエラー、「no such table: app_comment」となった。現状解決策なし --> マイグレーションを忘れていたので、行ったらOKになった
+
+Djangoで始めるブログ作成講座④：ページング機能を導入しよう！
+https://freemas.stepupkaraoke.com/python/django/making-blog-4
+
+	記事通りで、OK
+
+Djangoで始めるブログ作成講座⑤：カテゴリー機能を導入しよう！
+https://freemas.stepupkaraoke.com/python/django/making-blog-4
+
+Djangoで始めるブログ作成講座⑥：月別投稿一覧ページを作ろう！
+https://freemas.stepupkaraoke.com/python/django/making-blog-6
+
+
+Djangoで始めるブログ作成講座⑦：サイドバーを作ろう！
+https://freemas.stepupkaraoke.com/python/django/making-blog-7#google_vignette
+
+
+--------------------------------------------------------
+カテゴリーの未分類で、エラーが出るが、マークダウンに進む
+「django-markdownx」をインストールしてあるので、「https://zerofromlight.com/blogs/detail/52/」を参照して作成する
+
+
+プロジェクトディレクトリ内の「urls.py」を編集
+
+	path('markdownx/', include('markdownx.urls')),  # 追記
+
+アプリディレクトリ内の「models.py」を編集
+
+	from markdownx.models import MarkdownxField
+	content = MarkdownxField()
+
+admin.py を編集
+
+	from markdownx.admin import MarkdownxModelAdmin
+	admin.site.register(Post, MarkdownxModelAdmin)
+
+	この変更で、adminのPost入力でOK
+
+テンプレートを作成し詳細表示させる
+
+	「models.py」を編集しカスタムメソッドを追加		migrateしたが変化なしとのこと
+
+	post_detail.html　カスタムメソッドを表示
+
+	この変更で、詳細画面でOK
+
+フォームの作成
+
+	「forms.py」を作成
+
+	「views.py」を編集
+
+	「urls.py」を編集
+
+	「form.html」を新しく作成
+
+cssを変えた場合
+
+	Ctrl ＋ F5 で反映できる
+
+登録画像
+
+	登録画像がない場合、「noImage.png」を表示する
+
+----------------------------------------------------------------------------------------------------
+ある程度、上手く行ったのでPythonAnywhereにデプロイしてみる
+
+
+GitHubにコミット
+
+　　GitHubのリポジトリを作成
+	GitHub にログイン（https://github.com/kfbk）し、リポジトリを作成
+	リポジトリ名を入力（django2501）
+	Public か、Private かを選択 -->Private
+	Create repository をクリック
+	「…or create a new repository on the command line」の部分をターミナルにコピー
+　　コミット
+	Vs-Codeのターミナルに
+	貼り付けて[git push -u origin main] のところで止まるので、エンターを押して実行
+　　2度目以降
+	git add .
+	git commit -m "2nd"
+	git push
+
+【Django】Pythonanywhreでデプロイするアプリを切り替える方法。
+https://note.com/masato1230/n/n2b5b55a6e4a6
+
+
+作業フォルダの作成と仮想環境の設定
+
+	mkdir blogcomment
+	cd blogcomment
+	python -m venv venv		仮想環境を作成
+	.\venv\Scripts\activate		venv環境が起動
+	pip list
+	pip install django-markdownx	Django,Markdown,django-markdownx,pillow がインストールされた

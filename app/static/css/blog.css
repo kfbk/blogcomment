@@ -1,0 +1,53 @@
+.pagination .disabled,.pagination .current-page {
+  color: #f00;
+}
+ 
+.pagination .disabled:hover,.pagination .current-page:hover {
+  color: #0f0;
+  background-color: #fff;
+}
+
+.field  {
+    margin-top: 10px;
+}
+
+/* ブロック要素にする*/
+label {
+    display: block;
+}
+
+/* タイトル */
+input {
+    width: 45%;
+    padding: 5px;
+    box-sizing: border-box;
+    border: solid 1px;
+}
+
+/* テキスト*/
+textarea {
+    width: 45%;
+    box-sizing: border-box;
+    border: solid 1px;
+}
+
+/* 送信ボタン*/
+/* button {
+    margin-top: 30px;
+    width: 10%;
+    padding: 5px;
+} */
+
+/* テーブル*/
+.markdownx table {
+    border-collapse: collapse;
+}
+
+/* テーブル*/
+.markdownx th,td {
+    border: solid 2px;
+}
+
+.outline {
+		outline: 1px solid red;
+}

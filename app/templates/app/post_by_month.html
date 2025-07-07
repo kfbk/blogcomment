@@ -1,0 +1,20 @@
+{% extends 'blog_base.html' %}
+ 
+{% block content %}
+    <h1>{{ year }}年{{ month }} 月の投稿一覧</h1>
+    {% for post in posts %}
+        <div class="card mt-4 mb-4">
+            {% if post.thumbnail %}
+                <img class="card-img-top" src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
+            {% endif %}
+            <div class="card-body">
+                <h2 class="card-title">{{ post.title }}</h2>
+                <p class="card-text">{{ post.content|truncatechars:80 | safe }}</p>
+                <a href="{% url 'post_detail' pk=post.id %}" class="btn btn-primary">Read More &rarr;</a>
+            </div>
+            <div class="card-footer text-muted">
+                Posted on {{ post.created_at }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

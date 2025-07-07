@@ -1,0 +1,36 @@
+{% extends 'blog_base.html' %}
+ 
+{% block content %}
+    <a href="{% url 'post_list' %}">トップページに戻る</a>
+
+    <!-- <form action="{% url 'add_form' %}" method="POST"> -->
+    <!-- <form action="{% url 'add_form' %}" method="POST" enctype="multipart/form-data"> -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- {{ form.as_p }}
+        {{ form.media }} -->
+        <!-- {% for field in form %}
+            <div class="field">
+                {{ field.label_tag }}
+                {{ field }}
+                {{ form.media }}
+            </div>
+        {% endfor %}  -->
+        <div class="field">
+            <div>タイトル</div>
+            {{ form.title }}
+        </div>
+        <div class="field">
+            <div>先頭画像</div>
+            {{ form.thumbnail }}
+        </div>
+        <div class="field">
+            <div>内容（MKサポート、画像もD&DでOK）</div>
+            {{ form.content }}
+        </div>
+        <!-- 次は、Markdownに必要 -->
+        {{ form.media }}
+        <button type="submit" class="btn btn-primary">投稿</button>
+    </form>
+
+{% endblock %}
